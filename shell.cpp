@@ -3,12 +3,31 @@
 #include <sys/wait.h> // gerenciamento de processos filho 
 #include <iostream> // funcionalidade de entrada e saída std::cout , std::cin
 
+// COMANDOS INTERNOS
+void process_pwd(){
 
-// CÓDIGO PRÁTICO
+}
+
+void process_cd(){
+
+
+}
+
+void process_history(){
+
+    
+}
+
+// PROCESSADOR DE COMANDOS
 void process_command(std::string command) { // recebe texto de comando
     // Se for comando interno...
-    if (command == "exit") // se a string for "exit", finaliza. Exit é comando interno
-    exit(0);
+    if (command == "exit"){ // se a string for "exit", finaliza. 
+        exit(0); 
+    }else if(command == " "){
+    
+    }
+    
+
     // Se for comando externo
     // ∗ necessário verificar se é para ser executado em background
     //  Se for caminho relativo, procurar o comando na lista de diretórios
@@ -39,11 +58,11 @@ void process_command(std::string command) { // recebe texto de comando
 }
 //      Leitura do que o usuário quer
 int main() {
-    while (true) {
+    while (true) { // looping infinito
         std::cout << "$> ";
         std::string command;
-        getline(std::cin, command);
-        process_command(command);
+        getline(std::cin, command); // leitura do comando
+        process_command(command); // processar comando
     }
     return 0;
 }
