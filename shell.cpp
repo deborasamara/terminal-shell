@@ -2,10 +2,14 @@
 #include <unistd.h> // entrada/saída e manipulação de processos
 #include <sys/wait.h> // gerenciamento de processos filho 
 #include <iostream> // funcionalidade de entrada e saída std::cout , std::cin
+#include <stdlib.h> // para recuperar o caminho do diretório atual
 
 // COMANDOS INTERNOS
 void process_pwd(){ // mostrar diretorio de trabalho
-
+    std::string dir_atual;
+    getcwd(dir_atual);
+    std::cout <<"Diretório atual: " << dir_atual << std::endl;
+    return 0;
 }
 
 void process_cd(){ // mudar diretório
@@ -23,8 +27,8 @@ void process_command(std::string command) { // recebe texto de comando
     // Se for comando interno...
     if (command == "exit"){ // se a string for "exit", finaliza. 
         exit(0); 
-    }else if(command == " "){
-    
+    }else if(command == "pwd"){
+        process_pwd();
     }
     
 
