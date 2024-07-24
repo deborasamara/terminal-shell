@@ -9,12 +9,14 @@ void process_pwd(){ // mostrar diretorio de trabalho
     std::string dir_atual;
     getcwd(dir_atual);
     std::cout <<"Diretório atual: " << dir_atual << std::endl;
-    return 0;
 }
 
-void process_cd(){ // mudar diretório
-
-
+void process_cd(std::string directory){ // mudar diretório
+    if( chdir(directory.c_str()) == 0){
+        std::cout << "Atual directory : " <<  directory  << std::endl;
+    }else{
+        std::cout << "ERROR"  << std::endl;
+    }
 }
 
 void process_history(){ // histórico de comandos digitados pelo usuário
@@ -29,6 +31,13 @@ void process_command(std::string command) { // recebe texto de comando
         exit(0); 
     }else if(command == "pwd"){
         process_pwd();
+    }else if(command == "cd"){ // por verificação de algo digitadoo + string com o nome do diretorio para mudar
+        process_cd();
+        
+    }else if(command == "history"){
+        
+    }else{ // comando externo
+        
     }
     
 
