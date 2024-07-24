@@ -4,16 +4,16 @@
 #include <iostream> // funcionalidade de entrada e saída std::cout , std::cin
 
 // COMANDOS INTERNOS
-void process_pwd(){
+void process_pwd(){ // mostrar diretorio de trabalho
 
 }
 
-void process_cd(){
+void process_cd(){ // mudar diretório
 
 
 }
 
-void process_history(){
+void process_history(){ // histórico de comandos digitados pelo usuário
 
     
 }
