@@ -17,10 +17,19 @@ void process_pwd(){ // mostrar diretorio de trabalho
 }
 
 void process_cd(std::string directory){ // mudar diretório
-    if( chdir(directory.c_str()) == 0){
-        std::cout << "Atual directory : " <<  directory  << std::endl;
+    if(directory == ".."){
+        // Mudar para o diretório pai
+        if (chdir("..") == 0) {
+            std::cout << "Diretório atual alterado para o diretório pai." << std::endl;
+        } else {
+            std::cout << "Erro ao mudar para o diretório pai." << std::endl;
+        }
     }else{
-        std::cout << "ERROR"  << std::endl;
+        if( chdir(directory.c_str()) == 0){
+            std::cout << "Atual directory : " <<  directory  << std::endl;
+                }else{
+            std::cout << "ERROR"  << std::endl;
+        }
     }
 }
 
@@ -42,29 +51,37 @@ void process_command(std::string command) { // recebe texto de comando
     // Se for comando interno...
 
     // verificador de espaços
-    std::string principal_command;
+    std::string arg1_command;
     std::string arg2;
-
+    
     size_t position_space = command.find(' ');
-    principal_command = command.substr(0, position_space);
-    arg2 = command.substr(pos + 1); // +1 para pular o espaço
 
+     if (position_space != std::string::npos) {
+        // Extrair o comando principal (antes do espaço)
+        arg1_command = command.substr(0, position_space);
 
-    if (command == "exit"){ // se a string for "exit", finaliza. 
+        // Extrair o argumento (depois do espaço)
+        arg2 = command.substr(position_space + 1); // +1 para pular o espaço
+    } else {
+        arg2 = ""; 
+        arg1_command = command;
+    }
+   
+    if (arg1_command  == "exit"){ // se a string for "exit", finaliza. 
         exit(0); 
-    }else if(command == "pwd"){
+    }else if(arg1_command  == "pwd"){
         process_pwd();
-    }else if(command == "cd"){ // por verificação de algo digitadoo + string com o nome do diretorio para mudar
+    }else if(arg1_command == "cd"){ // por verificação de algo digitadoo + string com o nome do diretorio para mudar
         process_cd(arg2);
 
-    }else if(command == "history"){
+    }else if(arg1_command  == "history"){
         process_history();
         
     }else{ // COMANDO EXTERNO
         // Se for comando externo
         // ∗ necessário verificar se é para ser executado em background
         //  Se for absoluto verifica se comando existe
-        std::string absolute_path = "/bin/" + command; // caminho absoluto para o comando
+        std::string absolute_path = "bin/" + arg1_command; // caminho absoluto para o comando
         if (access(absolute_path.c_str(), F_OK) == 0) { // Arquivo existe no diretório, verificar se é executável
             if (access(absolute_path.c_str(), X_OK) == 0) { // Arquivo é executável
                 pid_t pid = fork(); // cria processo e retorna id do processo filho
