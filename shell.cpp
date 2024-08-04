@@ -20,13 +20,13 @@ void process_cd(std::string directory){ // mudar diretório
     if(directory == ".."){
         // Mudar para o diretório pai
         if (chdir("..") == 0) {
-            std::cout << "Diretório atual alterado para o diretório pai." << std::endl;
+            std::cout << "Diretório acima." << std::endl;
         } else {
-            std::cout << "Erro ao mudar para o diretório pai." << std::endl;
+            std::cout << "Erro ao mudar para o diretório acima" << std::endl;
         }
     }else{
         if( chdir(directory.c_str()) == 0){
-            std::cout << "Atual directory : " <<  directory  << std::endl;
+            std::cout << "Diretório Atual : " <<  directory  << std::endl;
                 }else{
             std::cout << "ERROR"  << std::endl;
         }
@@ -79,9 +79,12 @@ void process_command(std::string command) { // recebe texto de comando
         
     }else{ // COMANDO EXTERNO
         // Se for comando externo
-        // ∗ necessário verificar se é para ser executado em background
         //  Se for absoluto verifica se comando existe
-        std::string absolute_path = "bin/" + arg1_command; // caminho absoluto para o comando
+
+        char adiciona_caminho[200];
+        getcwd(adiciona_caminho, sizeof(adiciona_caminho));
+
+        std::string absolute_path = std::string(adiciona_caminho) + "/bin/" + arg1_command; // caminho absoluto para o comando
         if (access(absolute_path.c_str(), F_OK) == 0) { // Arquivo existe no diretório, verificar se é executável
             if (access(absolute_path.c_str(), X_OK) == 0) { // Arquivo é executável
                 pid_t pid = fork(); // cria processo e retorna id do processo filho

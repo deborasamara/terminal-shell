@@ -4,10 +4,10 @@ CHAMADA ls - Lista os arquivos localizados em um determinado diretório.
             o diretório de trabalho atual, que pode ser recuperado pela chamada de 
             sistema getcwd().
 */
-#include <stdio.h> // entrada e saída em c
 #include <dirent.h> // manipulação de diretórios
 #include <stdlib.h> // funções como alocação de memória, conversão de números etc
-#include <unistd.h> // 
+#include <unistd.h> // getcwd()
+#include <iostream> // entrada e saída c++
 
 // uso e chamadas de sistema opendir, readdir e closedir.
 
@@ -34,10 +34,9 @@ int main(int argc, char *argv[]){ // argumentos da função main
         argc++; // atualização do número de argumentos pra 2
     }
     if(argc > 2){ // diretório especificado
-        printf("Não é possível executar com os dados fornecidos:\n");
-        // função de c para imprimir dados formatados em um arquivo de saída - fprintf
-        fprintf(stderr, "Comando esperado: %s <diretório>\n", argv[0]);
-        fprintf(stderr, "OU:\n%s (para mostrar os itens da pasta atual)\n", argv[0]);
+        std::cerr << "Não é possível executar com os dados fornecidos" << std::endl;
+        std::cerr << "Comando esperado: %s <diretório>\n", argv[0];
+        std::cerr << "OU:\n" << "para mostrar os itens da pasta atual)\n" << argv[0] << std::endl;
 
         exit(EXIT_FAILURE);
     }
@@ -48,8 +47,9 @@ int main(int argc, char *argv[]){ // argumentos da função main
         exit(EXIT_FAILURE);
     }
     // leitura dos nomes dos arquivos
+    std::cout << "Listagem dos arquivos: " << std::endl;
     while( (entry = readdir(dir)) != NULL){
-        printf("%s\n", entry->d_name);
+        std::cout << entry->d_name << std::endl;
     }
 
     closedir(dir); 
