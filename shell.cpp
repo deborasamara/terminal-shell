@@ -39,7 +39,7 @@ void process_history(){ // histórico de comandos digitados pelo usuário
     }else{ // se o vetor tiver alguma coisa
         std::cout << "histórico: " << std::endl;
         for (size_t i = 0; i < vector_history.size(); ++i) {
-            std::cout << i + 1 << ": " << vector_history[i] << std::endl;
+            std::cout<<"# "<< vector_history[i] << std::endl;
         }
     }
     
@@ -53,6 +53,7 @@ void process_command(std::string command) { // recebe texto de comando
     // verificador de espaços
     std::string arg1_command;
     std::string arg2;
+    std::vector<std::string> argumentos;
     
     size_t position_space = command.find(' ');
 
@@ -62,6 +63,7 @@ void process_command(std::string command) { // recebe texto de comando
 
         // Extrair o argumento (depois do espaço)
         arg2 = command.substr(position_space + 1); // +1 para pular o espaço
+        argumentos.push_back(arg2);
     } else {
         arg2 = ""; 
         arg1_command = command;
@@ -79,12 +81,8 @@ void process_command(std::string command) { // recebe texto de comando
         
     }else{ // COMANDO EXTERNO
         // Se for comando externo
-        //  Se for absoluto verifica se comando existe
-
-        char adiciona_caminho[200];
-        getcwd(adiciona_caminho, sizeof(adiciona_caminho));
-
-        std::string absolute_path = std::string(adiciona_caminho) + "/bin/" + arg1_command; // caminho absoluto para o comando
+        //      Se for absoluto verifica se comando existe
+        std::string absolute_path = "/mnt/c/Users/Débora/Desktop/so-shell/terminal-shell/bin/"+ arg1_command; // caminho absoluto para o comando
         if (access(absolute_path.c_str(), F_OK) == 0) { // Arquivo existe no diretório, verificar se é executável
             if (access(absolute_path.c_str(), X_OK) == 0) { // Arquivo é executável
                 pid_t pid = fork(); // cria processo e retorna id do processo filho
@@ -99,6 +97,7 @@ void process_command(std::string command) { // recebe texto de comando
                     // de processos em execução para gerenciar background. ∗/
                     // Processo pai espera processo filho terminar. ∗/
                     // waitpid(pid, nullptr, 0);
+                      waitpid(pid, nullptr, 0);
                 }
             } else { // Arquivo não é executável
                 std::cout << "permission denied: " << command << std::endl;
