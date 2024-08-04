@@ -56,7 +56,7 @@ void process_command(std::string command) { // recebe texto de comando
     
     size_t position_space = command.find(' ');
 
-     if (position_space != std::string::npos) {
+    if (position_space != std::string::npos) {
         // Extrair o comando principal (antes do espaço)
         arg1_command = command.substr(0, position_space);
 

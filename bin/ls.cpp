@@ -24,12 +24,12 @@ int main(int argc, char *argv[]){ // argumentos da função main
     // declaração de uma variável que é uma estrutura de dados usada para representar um diretório, sendo usada para manipulações e abrir
     DIR *dir; // declaração de ponteiro para um objeto do tipo DIR
     // declaração de uma var do tipo struct dirent, que contem informações sobre UM arquivo no diretório, ela lerá todos os nomes dos arquivos do diretório
-    struct dirent *entry; // estrutura de dados específica já definida em c. usada para armazenar infos sobre um arquivo de um diretório(nome, tipo, tamanho, etc)
+    struct dirent *entry; // estrutura de dados específica já definida. usada para armazenar infos sobre um arquivo de um diretório(nome, tipo, tamanho, etc)
     // *entry é um ponteiro do tipo struct dirent. aponta para a estrutura de dados.
     // testa os argumentos
     if(argc == 1){ // diretório atual
         char memoria_temp[100]; // cria uma variável do tipo char, temporária para guardar o nome do dir atual 
-        argv[1] = getcwd(memoria_temp, sizeof(memoria_temp)); // getcwd() é uma função da biblioteca padrão de C, definida em <unistd.h>, usada para obter o diretório de trabalho atual
+        argv[1] = getcwd(memoria_temp, sizeof(memoria_temp)); // getcwd() é uma função da biblioteca padrão, usada para obter o diretório de trabalho atual
         // sizeof(memoria_temp) retorna o tamanho de memoria_temp em bytes
         argc++; // atualização do número de argumentos pra 2
     }
