@@ -5,11 +5,4 @@ Atividade de Sistemas Operacionais, 3° período: desenvolvimento de uma shell s
 ### A Shell
 
 ### Pasta Bin com comandos externos à shell
-> cat
-> ls
-> mkdir
-> rmdir
-> rm
-> uptime
-> date
 
