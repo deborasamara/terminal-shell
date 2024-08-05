@@ -20,7 +20,27 @@ int main() {
 }
 ```
 Código rodando:
-![image](https://github.com/user-attachments/assets/25f2d93e-e8e0-4fa1-8e2d-f628447ee211)
+```
+./shell
+$> ls
+Listagem dos arquivos: 
+.
+..
+.git
+alala
+bin
+dir-shell
+README.md
+shell
+shell.cpp
+teste
+testecat.txt
+$> history
+histórico:
+# ls
+# history
+$>
+```
 
 ### Comandos internos
 Comandos organizados dentro do próprio arquivo da shell.
