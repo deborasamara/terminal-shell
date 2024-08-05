@@ -15,7 +15,7 @@ int main(int argc, char *argv[]){
         exit(EXIT_FAILURE);
     }
 
-     mkdir(argv[2], 0777); // tenta criar o diretório com as permissões especificadas (0777 neste caso, que permite leitura, escrita e execução para o usuário atual).
+     mkdir(argv[1], 0777); // tenta criar o diretório com as permissões especificadas (0777 neste caso, que permite leitura, escrita e execução para o usuário atual).
 
     return 0;
 }

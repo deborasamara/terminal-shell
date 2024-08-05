@@ -53,7 +53,7 @@ void process_command(std::string command) { // recebe texto de comando
     // verificador de espaços
     std::string arg1_command;
     std::string arg2;
-    std::vector<std::string> argumentos;
+    std::vector<std::string> partes_linha_comando;
     
     size_t position_space = command.find(' ');
 
@@ -63,7 +63,7 @@ void process_command(std::string command) { // recebe texto de comando
 
         // Extrair o argumento (depois do espaço)
         arg2 = command.substr(position_space + 1); // +1 para pular o espaço
-        argumentos.push_back(arg2);
+        //argumentos.push_back(arg2);
     } else {
         arg2 = ""; 
         arg1_command = command;
@@ -90,8 +90,17 @@ void process_command(std::string command) { // recebe texto de comando
                     std::cout << "Erro de execução!" << std::endl;
                     return;
                 } else if (pid == 0){ //processo filho. (Pid = 0)
-                    char * argv[2] = {(char *)command.c_str(), nullptr}; // converte o código do comando em array de strings
-                    execve(absolute_path.c_str(), argv, NULL); // executa o programa no caminho absoluto
+                    std::vector<char*> array_ponteiros_lc; // array de ponteiros a ser preenchido
+                    array_ponteiros_lc.push_back(const_cast<char*>(arg1_command.c_str()));
+
+                    if (!arg2.empty()) {
+                        array_ponteiros_lc.push_back(const_cast<char*>(arg2.c_str()));
+                    }
+                    array_ponteiros_lc.push_back(nullptr); 
+                    
+                    //char * argv[2] = {(char *)command.c_str(), nullptr}; // converte o código do comando em array de strings
+                    //execve(absolute_path.c_str(), argv, NULL); // executa o programa no caminho absoluto
+                    execve(absolute_path.c_str(),array_ponteiros_lc.data(), nullptr ); // executa o programa no caminho absoluto
                 } else { // Processo pai. (Pid > 0)
                     // Deve adicionar processo filho na lista (std::vector)
                     // de processos em execução para gerenciar background. ∗/
