@@ -5,9 +5,17 @@
 #include <stdlib.h> // para recuperar o caminho do diretório atual
 #include <sstream> // manipulação de strings
 #include <vector> // vetores
+#include <limits.h>
 #include <string> // para manipular strings
  
-std::vector<std::string> vector_history; // vetor de comandos acionador
+std::vector<std::string> vector_history; // vetor de comandos 
+std::string path_atual_string;
+
+void caminho_atual(){
+    char path_atual_char[PATH_MAX]; // buffer
+    getcwd(path_atual_char, sizeof(path_atual_char));
+    path_atual_string = path_atual_char; 
+}
 
 // COMANDOS INTERNOS
 void process_pwd(){ // mostrar diretorio de trabalho
@@ -82,7 +90,10 @@ void process_command(std::string command) { // recebe texto de comando
     }else{ // COMANDO EXTERNO
         // Se for comando externo
         //      Se for absoluto verifica se comando existe
-        std::string absolute_path = "/mnt/c/Users/Débora/Desktop/so-shell/terminal-shell/bin/"+ arg1_command; // caminho absoluto para o comando
+
+        //std::string absolute_path = "/mnt/c/Users/Débora/Desktop/so-shell/terminal-shell/bin/"+ arg1_command; // caminho absoluto para o comando
+        std::string absolute_path = path_atual_string + "/bin/" + arg1_command;
+
         if (access(absolute_path.c_str(), F_OK) == 0) { // Arquivo existe no diretório, verificar se é executável
             if (access(absolute_path.c_str(), X_OK) == 0) { // Arquivo é executável
                 pid_t pid = fork(); // cria processo e retorna id do processo filho
@@ -118,6 +129,7 @@ void process_command(std::string command) { // recebe texto de comando
 }
 //      Leitura do que o usuário quer
 int main() {
+    caminho_atual();
     while (true) { // looping infinito
         std::cout << "$> ";
         std::string command;
